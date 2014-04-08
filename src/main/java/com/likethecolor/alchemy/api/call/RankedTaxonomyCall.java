@@ -38,7 +38,7 @@ public class RankedTaxonomyCall extends AbstractCall<TaxonomyAlchemyEntity> {
 
   @Override
   public String getName() {
-    return Constants.CALL_NAME_RANKED_CATEGORY;
+    return Constants.CALL_NAME_RANKED_TAXONOMY;
   }
 
   @Override
