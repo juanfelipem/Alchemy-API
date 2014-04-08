@@ -1,5 +1,5 @@
 /**
- * File: CategoryAlchemyEntity.java
+ * File: TaxonomyAlchemyEntity.java
  * Original Author: Dan Brown <dan@likethecolor.com>
  * Copyright 2012 Dan Brown <Dan Brown <dan@likethecolor.com>>
  *
@@ -21,34 +21,37 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * AlchemyAPI provides easy-to-use facilities for categorizing your content.
- * Example usage: @see <a href="http://www.alchemyapi.com/api/categ/urls.html">http://www.alchemyapi.com/api/categ/urls.html</a>
+ * AlchemyAPI provides easy-to-use facilities for Determine the taxonomy of your page
+ * Example usage: @see <a href="http://www.alchemyapi.com/api/taxonomy_calls/urls.html">http://www.alchemyapi.com/api/taxonomy_calls/urls.html</a>
  */
 public class TaxonomyAlchemyEntity extends AbstractAlchemyEntity {
-  private String category;
+  private String label;
+  
+  private String confident;
 
   public TaxonomyAlchemyEntity() {
     super();
   }
 
-  public TaxonomyAlchemyEntity(final String category, final Double score) {
+  public TaxonomyAlchemyEntity(final String label, final Double score, final String confident) {
     super(score);
-    setCategory(category);
+    setConfident(confident);
+    setLabel(label);
   }
 
-  public void setCategory(String category) {
-    if(category != null) {
-      category = category.trim();
+  public void setLabel(String label) {
+    if(label != null) {
+        label = label.trim();
     }
-    this.category = category;
+    this.label = label;
   }
 
-  public String getCategory() {
-    return category;
+  public String getLabel() {
+    return label;
   }
 
   public TaxonomyAlchemyEntity clone() {
-    return new TaxonomyAlchemyEntity(getCategory(), getScore());
+    return new TaxonomyAlchemyEntity(getLabel(), getScore(), getConfident());
   }
 
   @Override
@@ -65,8 +68,8 @@ public class TaxonomyAlchemyEntity extends AbstractAlchemyEntity {
 
     TaxonomyAlchemyEntity entity = (TaxonomyAlchemyEntity) o;
 
-    if(category != null ? !category.equals(entity.category)
-                        : entity.category != null) {
+    if(label != null ? !label.equals(entity.label)
+                        : entity.label != null) {
       return false;
     }
 
@@ -76,7 +79,7 @@ public class TaxonomyAlchemyEntity extends AbstractAlchemyEntity {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + (category != null ? category.hashCode() : 0);
+    result = 31 * result + (label != null ? label.hashCode() : 0);
     return result;
   }
 
@@ -97,8 +100,17 @@ public class TaxonomyAlchemyEntity extends AbstractAlchemyEntity {
    */
   public String toString(final ToStringStyle style) {
     return new ToStringBuilder(this, style)
-        .append("category", getCategory())
+        .append("label", getLabel())
         .append("score", getScore())
+        .append("confident", getConfident())
         .toString();
   }
+
+public String getConfident() {
+    return confident;
+}
+
+public void setConfident(String confident) {
+    this.confident = confident;
+}
 }

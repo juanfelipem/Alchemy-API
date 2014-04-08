@@ -25,23 +25,25 @@ import org.json.JSONObject;
 import com.likethecolor.alchemy.api.entity.Response;
 import com.likethecolor.alchemy.api.entity.TaxonomyAlchemyEntity;
 
-public class TaxonomiesParser extends AbstractParser<TaxonomyAlchemyEntity> {
+public class TaxonomyParser extends AbstractParser<TaxonomyAlchemyEntity> {
   protected void populateResponse(final Response<TaxonomyAlchemyEntity> response) {
     final JSONObject jsonObject = getJSONObject();
-    final JSONArray categories = getJSONArray(JSONConstants.RANKED_CATEGORIES, jsonObject);
+    final JSONArray taxonomyItems = getJSONArray(JSONConstants.RANKED_TAXONOMY, jsonObject);
 
-    if(categories.length() > 0) {
-      JSONObject categoryJsonObject;
+    if(taxonomyItems.length() > 0) {
+      JSONObject taxonomyJsonObject;
       TaxonomyAlchemyEntity entity;
-      String category;
+      String label;
       Double score;
-      for(int i = 0; i < categories.length(); i++) {
-        categoryJsonObject = getCategory(categories, i);
+      String confident;
+      for(int i = 0; i < taxonomyItems.length(); i++) {
+        taxonomyJsonObject = getTaxonomyItem(taxonomyItems, i);
 
-        category = getString(JSONConstants.RANKED_CATEGORIES_TEXT_KEY, categoryJsonObject);
-        score = getDouble(JSONConstants.RANKED_CATEGORIES_SCORE_KEY, categoryJsonObject);
-        if(isValidCategory(category, score)) {
-          entity = new TaxonomyAlchemyEntity(category, score);
+        label = getString(JSONConstants.RANKED_TAXONOMY_LABEL_KEY, taxonomyJsonObject);
+        score = getDouble(JSONConstants.RANKED_TAXONOMY_SCORE_KEY, taxonomyJsonObject);
+        confident = getString(JSONConstants.RANKED_TAXONOMY_CONFIDENT_KEY, taxonomyJsonObject);
+        if(isValidTaxonomyItem(label, score, confident)) {
+          entity = new TaxonomyAlchemyEntity(label, score, confident);
           response.addEntity(entity);
         }
       }
@@ -52,15 +54,15 @@ public class TaxonomiesParser extends AbstractParser<TaxonomyAlchemyEntity> {
    * Return a json object from the provided array.  Return an empty object if
    * there is any problems fetching the category data.
    *
-   * @param categories array of category data
+   * @param taxonomyItems array of taxonomy data
    * @param index of the object to fetch
    *
    * @return json object from the provided array
    */
-  private JSONObject getCategory(final JSONArray categories, final int index) {
+  private JSONObject getTaxonomyItem(final JSONArray taxonomyItems, final int index) {
     JSONObject object = new JSONObject();
     try {
-      object = (JSONObject) categories.get(index);
+      object = (JSONObject) taxonomyItems.get(index);
     }
     catch(JSONException e) {
       e.printStackTrace();
@@ -71,13 +73,14 @@ public class TaxonomiesParser extends AbstractParser<TaxonomyAlchemyEntity> {
   /**
    * Return true if at least one of the values is not null/empty.
    *
-   * @param category the category text
+   * @param label the label of the taxonomy item
    * @param score the sentiment score
+   * @param confident is alchemy confident with the response?
    *
    * @return true if at least one of the values is not null/empty
    */
-  private boolean isValidCategory(final String category, final Double score) {
-    return !StringUtils.isBlank(category)
-           || score != null;
+  private boolean isValidTaxonomyItem(final String label, final Double score, final String confident) {
+    return !StringUtils.isBlank(label)
+           || score != null || confident != null;
   }
 }

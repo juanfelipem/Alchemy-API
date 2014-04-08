@@ -87,6 +87,11 @@ public interface JSONConstants {
   static final String RANKED_CATEGORIES = "categories";
   static final String RANKED_CATEGORIES_TEXT_KEY = "text";
   static final String RANKED_CATEGORIES_SCORE_KEY = "relevance";
+  
+  static final String RANKED_TAXONOMY = "taxonomy";
+  static final String RANKED_TAXONOMY_LABEL_KEY = "label";
+  static final String RANKED_TAXONOMY_SCORE_KEY = "score";
+  static final String RANKED_TAXONOMY_CONFIDENT_KEY = "confident";
 
   static final String RANKED_CONCEPTS = "concepts";
   static final String RANKED_CONCEPTS_TEXT_KEY = "text";

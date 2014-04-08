@@ -23,7 +23,7 @@ import com.likethecolor.alchemy.api.entity.Response;
 import com.likethecolor.alchemy.api.entity.TaxonomyAlchemyEntity;
 import com.likethecolor.alchemy.api.params.CategoryParams;
 import com.likethecolor.alchemy.api.params.Params;
-import com.likethecolor.alchemy.api.parser.json.TaxonomiesParser;
+import com.likethecolor.alchemy.api.parser.json.TaxonomyParser;
 
 
 public class TaxonomyCall extends AbstractCall<TaxonomyAlchemyEntity> {
@@ -37,11 +37,11 @@ public class TaxonomyCall extends AbstractCall<TaxonomyAlchemyEntity> {
 
     @Override
     public String getName() {
-        return Constants.CALL_NAME_CATEGORY;
+        return Constants.CALL_NAME_RANKED_TAXONOMY;
     }
 
     @Override
     public Response<TaxonomyAlchemyEntity> parse(String jsonString) {
-        return new TaxonomiesParser().parse(jsonString);
+        return new TaxonomyParser().parse(jsonString);
     }
 }
