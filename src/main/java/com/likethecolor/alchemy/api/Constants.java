@@ -30,6 +30,7 @@ public interface Constants {
   static final String CALL_NAME_RANKED_NAMED_ENTITIES = "GetRankedNamedEntities";
   static final String CALL_NAME_RANKED_KEYWORDS = "GetRankedKeywords";
   static final String CALL_NAME_RANKED_CONCEPTS = "GetRankedConcepts";
+  static final String CALL_NAME_RANKED_TAXONOMY = "GetRankedTaxonomy";
   static final String CALL_NAME_MICROFORMAT_DATA = "GetMicroformatData";
   static final String CALL_NAME_LANGUAGE = "GetLanguage";
   static final String CALL_NAME_FEED_LINKS = "GetFeedLinks";
